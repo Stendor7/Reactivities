@@ -31,6 +31,12 @@ namespace API
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             }
            );
+           //this means that our application will allow any header and any method (get, post, etc), from the origin posted
+           services.AddCors(opt => {
+               opt.AddPolicy("CorsPolicy", policy => {
+                   policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+               });
+           });
             services.AddControllers();
 
         }
@@ -48,6 +54,9 @@ namespace API
             app.UseRouting();
 
             app.UseAuthorization();
+
+//Adds a CORS middleware to your web application pipeline to allow cross domain requests. --steven
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
