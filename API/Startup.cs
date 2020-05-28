@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Activities;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,6 +39,8 @@ namespace API
                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
                });
            });
+           //even thou there are going to be more handlers, we just need to tell it about one since after it knows where the assebly is
+           services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddControllers();
 
         }
